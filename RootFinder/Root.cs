@@ -23,7 +23,7 @@ namespace RootFinder
 
             // x1 = x0 - f(x0)/f'(x0)
             var x1 = x0 - (Math.Pow(x0, rootPower) - number) / (rootPower * Math.Pow(x0, rootPower - 1.0));
-            
+
             // ! can return NaN if number or rootPower is too big
             while (Math.Abs(x1 - x0) > eps)
             {
@@ -32,15 +32,19 @@ namespace RootFinder
             }
 
             PreviousRoot = x1;
-            
-            return x1;
+
+            return x1 is double.NaN 
+                ? throw new OverflowException("This method of root calculation can't evaluate this input.")
+                : x1;
         }
+
         /// <summary>
-        /// Returns difference between previous calculated root and <b>number</b>
+        /// Returns difference between previous calculated root and result of standard Math.Pow method
         /// </summary>
-        public static double CompareWithPrevious(double number)
+        public static double CompareWithPrevious(double number, double rootPower)
         {
-            return Math.Abs(number - PreviousRoot);
+            var powRoot = Math.Pow(number, 1.0 / rootPower);
+            return Math.Abs(powRoot - PreviousRoot);
         }
     }
 }
