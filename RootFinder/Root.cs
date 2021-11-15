@@ -21,7 +21,7 @@ namespace RootFinder
             // initial approximation
             var x0 = number / rootPower;
 
-            // x1 = x0 - f(x0)/f'(x0)
+            // x1 = x0 - f(x0)/f'(x0), where f(x0) = x0^rootPower - number
             var x1 = x0 - (Math.Pow(x0, rootPower) - number) / (rootPower * Math.Pow(x0, rootPower - 1.0));
 
             // ! can return NaN if number or rootPower is too big

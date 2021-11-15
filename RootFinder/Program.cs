@@ -13,7 +13,7 @@ namespace RootFinder
         {
             Console.Title = ProgramName;
             PrintMenu();
-            
+
             // old C style console menu :)
             while (true)
             {
@@ -63,7 +63,7 @@ namespace RootFinder
             try
             {
                 Console.WriteLine($"Root of power 2 of {_number} is {Root.Get(_number, 2, _eps)}");
-                
+
                 Console.WriteLine();
                 Console.WriteLine("Compare with standard Pow? (y/n)");
                 if (Console.ReadKey().Key == ConsoleKey.Y)
@@ -76,7 +76,7 @@ namespace RootFinder
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
             Console.WriteLine();
             Console.WriteLine("Try another combination? (y/n)");
             if (Console.ReadKey(intercept: true).Key == ConsoleKey.Y)
@@ -94,7 +94,7 @@ namespace RootFinder
             try
             {
                 Console.WriteLine($"Root of power {_rootPower} of {_number} is {Root.Get(_number, _rootPower, _eps)}");
-                
+
                 Console.WriteLine();
                 Console.WriteLine("Compare with standard Pow? (y/n)");
                 if (Console.ReadKey(intercept: true).Key == ConsoleKey.Y)
@@ -107,7 +107,7 @@ namespace RootFinder
             {
                 Console.WriteLine(ex.Message);
             }
-            
+
             Console.WriteLine();
             Console.WriteLine("Try another number? (y/n)");
             if (Console.ReadKey(intercept: true).Key == ConsoleKey.Y)
@@ -116,7 +116,7 @@ namespace RootFinder
                 GetRoot();
             }
         }
-        
+
         private static void ComparePreviousRootWithPow()
         {
             if (Root.PreviousRoot is double.NaN)
@@ -149,7 +149,7 @@ namespace RootFinder
             Console.WriteLine("Enter number:");
             _number = ValidateAndGetInput();
         }
-        
+
         private static void SetRootPower()
         {
             Console.WriteLine();
