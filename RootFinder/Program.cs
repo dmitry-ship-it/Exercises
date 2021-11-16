@@ -14,7 +14,6 @@ namespace RootFinder
             Console.Title = ProgramName;
             PrintMenu();
 
-            // old C style console menu :)
             while (true)
             {
                 switch (Console.ReadKey().Key)
@@ -24,14 +23,10 @@ namespace RootFinder
                         PrintMenu();
                         break;
                     case ConsoleKey.D2:
-                        GetSquareRoot();
-                        PrintMenu();
-                        break;
-                    case ConsoleKey.D3:
                         ComparePreviousRootWithPow();
                         PrintMenu();
                         break;
-                    case ConsoleKey.D4:
+                    case ConsoleKey.D3:
                         SetEpsilon();
                         PrintMenu();
                         break;
@@ -47,45 +42,13 @@ namespace RootFinder
             Console.WriteLine($" -- {ProgramName} -- ");
             Console.WriteLine("Options:");
             Console.WriteLine("1. Calculate n-power root");
-            Console.WriteLine("2. Calculate square root");
-            Console.WriteLine("3. Compare previous found root with standard Pow");
-            Console.WriteLine("4. Set new Epsilon (now: {0})", _eps);
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("2. Compare previous found root with standard Pow");
+            Console.WriteLine("3. Set new Epsilon (now: {0})", _eps);
+            Console.WriteLine("4. Exit");
             Console.WriteLine();
             Console.Write(">>> ");
         }
-
-        private static void GetSquareRoot()
-        {
-            SetNumber();
-            _rootPower = 2;
-
-            try
-            {
-                Console.WriteLine($"Root of power 2 of {_number} is {Root.Get(_number, 2, _eps)}");
-
-                Console.WriteLine();
-                Console.WriteLine("Compare with standard Pow? (y/n)");
-                if (Console.ReadKey().Key == ConsoleKey.Y)
-                {
-                    Console.WriteLine();
-                    ComparePreviousRootWithPow();
-                }
-            }
-            catch (OverflowException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Try another combination? (y/n)");
-            if (Console.ReadKey(intercept: true).Key == ConsoleKey.Y)
-            {
-                Console.WriteLine();
-                GetSquareRoot();
-            }
-        }
-
+        
         private static void GetRoot()
         {
             SetNumber();
@@ -159,10 +122,9 @@ namespace RootFinder
 
         private static double ValidateAndGetInput(bool checkNegativeNumbers = false)
         {
-            var input = Console.ReadLine() ?? "0";
             double result;
 
-            while (!double.TryParse(input, out result)
+            while (!double.TryParse(Console.ReadLine(), out result)
                    || checkNegativeNumbers && result < double.Epsilon)
             {
                 Console.WriteLine("Invalid input. Please, try again:");
