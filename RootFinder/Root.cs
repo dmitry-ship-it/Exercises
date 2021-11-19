@@ -33,13 +33,13 @@ namespace RootFinder
 
             // nextValue = currentValue - f(currentValue)/f'(currentValue),
             // where f(currentValue) = currentValue^rootPower - number
-            var nextValue = currentValue - (Math.Pow(currentValue, rootPower) - number) / (rootPower * Math.Pow(currentValue, rootPower - 1.0));
+            var nextValue = currentValue - (CustomPow(currentValue, rootPower) - number) / (rootPower * CustomPow(currentValue, rootPower - 1.0));
 
             // ! can return NaN if number or rootPower is too big
             while (Math.Abs(nextValue - currentValue) > eps)
             {
                 currentValue = nextValue;
-                nextValue = currentValue - (Math.Pow(currentValue, rootPower) - number) / (rootPower * Math.Pow(currentValue, rootPower - 1.0));
+                nextValue = currentValue - (CustomPow(currentValue, rootPower) - number) / (rootPower * CustomPow(currentValue, rootPower - 1.0));
             }
 
             PreviousRoot = nextValue;
@@ -56,6 +56,28 @@ namespace RootFinder
         {
             var powRoot = Math.Pow(number, 1.0 / rootPower);
             return Math.Abs(powRoot - PreviousRoot);
+        }
+
+        private static double CustomPow(double number, double power)
+        {
+            if (number == 0)
+            {
+                return 0;
+            }
+
+            return power switch
+            {
+                // power of 0
+                0 => 1,
+                
+                // negative exponent
+                < 0 => 1 / CustomPow(number, -power),
+                
+                // fractional exponent
+                > 0 and < 1 => Get(number, (int) (1 / power)),
+                
+                _ => number * CustomPow(number, power - 1)
+            };
         }
     }
 }
