@@ -20,19 +20,18 @@ namespace RootFinder
                 {
                     case ConsoleKey.D1:
                         GetRoot();
-                        PrintMenu();
                         break;
                     case ConsoleKey.D2:
                         ComparePreviousRootWithPow();
-                        PrintMenu();
                         break;
                     case ConsoleKey.D3:
                         SetEpsilon();
-                        PrintMenu();
                         break;
                     default:
                         return;
                 }
+
+                PrintMenu();
             }
         }
 
@@ -56,7 +55,7 @@ namespace RootFinder
 
             try
             {
-                Console.WriteLine($"Root of power {_rootPower} of {_number} is {Root.Get(_number, _rootPower, _eps)}");
+                Console.WriteLine($"Root of {_number} in power {_rootPower} is {Root.Get(_number, _rootPower, _eps)}");
 
                 Console.WriteLine();
                 Console.WriteLine("Compare with standard Pow? (y/n)");

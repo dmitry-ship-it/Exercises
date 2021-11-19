@@ -7,13 +7,13 @@ namespace RootFinder
         public static double PreviousRoot { get; private set; }
 
         /// <summary>
-        /// Method calculates the root of the number.
+        /// Method calculates the root of the positive number.
         /// </summary>
         /// <param name="number">Number whose root you want to find</param>
-        /// <param name="rootPower">Root power/degree, or in standard power notation (number)^(1/rootPower).</param>
+        /// <param name="rootPower">Root power(degree), or in standard power notation (number)^(1/rootPower).</param>
         /// <param name="eps">Maximum allowed error.</param>
         /// <returns>Root of <b>number</b></returns>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentException">Number is negative.</exception>
         /// <exception cref="OverflowException"></exception>
         public static double Get(double number, double rootPower, double eps = 1E-10)
         {
@@ -24,6 +24,7 @@ namespace RootFinder
 
             if (number < 0)
             {
+                PreviousRoot = double.NaN;
                 return double.NaN;
             }
 
