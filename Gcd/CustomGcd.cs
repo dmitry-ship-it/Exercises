@@ -26,9 +26,13 @@ namespace Gcd
                 switch (digits[i])
                 {
                     case int.MinValue:
-                        throw new ArgumentException("One of digits contains invalid value (int.MinValue).", nameof(digits));
+                        throw new ArgumentOutOfRangeException(nameof(digits),
+                            "One of digits contains invalid value (int.MinValue).");
                     case 1:
                         return 1;
+                    case int.MaxValue:
+                    case -int.MaxValue:
+                        return int.MaxValue;
                     case < 0:
                         digits[i] = -digits[i];
                         break;
@@ -42,7 +46,7 @@ namespace Gcd
 
             return digits[0];
         }
-        
+
         public static int GetGcdByEuclidean(out long elapsedTicks, params int[] digits)
         {
             var stopwatch = new Stopwatch();
@@ -72,7 +76,7 @@ namespace Gcd
         private static void SubtractMinFromMax(int[] array)
         {
             var maxElementIndex = 0;
-            
+
             // find index of min value
             for (var i = 0; i < array.Length; i++)
             {
@@ -81,7 +85,7 @@ namespace Gcd
                     maxElementIndex = i;
                 }
             }
-            
+
             array[maxElementIndex] -= array.Min();
         }
     }
