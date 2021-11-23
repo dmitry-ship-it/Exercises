@@ -4,9 +4,9 @@ namespace Gcd
 {
     public static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine(CustomGcd.GetGcdByEuclidean(-10234567, -234568989) == 97);
         }
     }
 }
