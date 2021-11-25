@@ -76,7 +76,6 @@ namespace Gcd
         {
             var min = array.Min();
 
-            // find index of min value
             for (var i = 0; i < array.Length; i++)
             {
                 if (array[i] > min)
@@ -84,6 +83,80 @@ namespace Gcd
                     array[i] -= min;
                 }
             }
+        }
+
+        public static int GetGcdByStein(int first, int second)
+        {
+            if (first == 0 && second == 0)
+            {
+                throw new ArgumentException("All numbers are 0 at the same time.");
+            }
+
+            if (first == int.MinValue || second == int.MinValue)
+            {
+                throw new ArgumentOutOfRangeException(nameof(first),
+                    "One or two numbers are invalid (int.MinValue).");
+            }
+
+            if (first == 1 || second == 1 || first == int.MaxValue || second == int.MaxValue)
+            {
+                return 1;
+            }
+
+            if (first < 0)
+            {
+                first = -first;
+            }
+
+            if (second < 0)
+            {
+                second = -second;
+            }
+
+            var factor = 1;
+
+            while (first != 0 && second != 0)
+            {
+                if (first % 2 == 0 && second % 2 == 0)
+                {
+                    factor <<= 1;
+                    first >>= 1;
+                    second >>= 1;
+                }
+                else if (first % 2 == 0)
+                {
+                    first >>= 1;
+                }
+                else if (second % 2 == 0)
+                {
+                    second >>= 1;
+                }
+                else if (first < second)
+                {
+                    second = (second - first) >> 1;
+                }
+                else
+                {
+                    first = (first - second) >> 1;
+                }
+            }
+
+            return first == 0
+                ? second * factor
+                : first * factor;
+        }
+
+        public static int GetGcdByStein(out long elapsedTicks, int first, int second)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+            var result = GetGcdByStein(first, second);
+            stopwatch.Stop();
+
+            elapsedTicks = stopwatch.ElapsedTicks;
+
+            return result;
         }
     }
 }
