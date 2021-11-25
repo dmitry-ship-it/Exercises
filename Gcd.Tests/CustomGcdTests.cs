@@ -57,5 +57,12 @@ namespace Gcd.Tests
         public void GetGcdByEuclidean_WithOneOrMoreMinIntegers_ThrowArgumentOutOfRangeException(params int[] digits) =>
             Assert.Throws<ArgumentOutOfRangeException>(() => GetGcdByEuclidean(digits),
                 $"Number cannot be {int.MinValue}.");
+
+        [Test]
+        public void GetGcdByEuclidean_WithNullArray_ThrowArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() => GetGcdByEuclidean(null), "Array is null.");
+            Assert.Throws<ArgumentNullException>(() => GetGcdByEuclidean(Array.Empty<int>()), "Array is empty.");
+        }
     }
 }

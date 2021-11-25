@@ -28,11 +28,10 @@ namespace Gcd
                     case int.MinValue:
                         throw new ArgumentOutOfRangeException(nameof(digits),
                             "One of digits contains invalid value (int.MinValue).");
-                    case 1:
-                        return 1;
                     case int.MaxValue:
                     case -int.MaxValue:
-                        return int.MaxValue;
+                    case 1:
+                        return 1;
                     case < 0:
                         digits[i] = -digits[i];
                         break;
@@ -41,7 +40,7 @@ namespace Gcd
 
             while (!IsMembersEqual(digits))
             {
-                SubtractMinFromMax(digits);
+                SubtractMin(digits);
             }
 
             return digits[0];
@@ -73,20 +72,18 @@ namespace Gcd
             return true;
         }
 
-        private static void SubtractMinFromMax(int[] array)
+        private static void SubtractMin(int[] array)
         {
-            var maxElementIndex = 0;
+            var min = array.Min();
 
             // find index of min value
             for (var i = 0; i < array.Length; i++)
             {
-                if (array[i] > array[maxElementIndex])
+                if (array[i] > min)
                 {
-                    maxElementIndex = i;
+                    array[i] -= min;
                 }
             }
-
-            array[maxElementIndex] -= array.Min();
         }
     }
 }
