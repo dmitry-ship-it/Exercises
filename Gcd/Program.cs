@@ -9,34 +9,44 @@ namespace Gcd
         {
             do
             {
-                Console.Clear();
-                Console.WriteLine("Select a method for calculating GDC:");
-                Console.WriteLine("1. Euclidean");
-                Console.WriteLine("2. Stein (only for two numbers)");
-                Console.WriteLine("3. Exit");
-                Console.Write(">> ");
-
-                try
-                {
-                    switch (Console.ReadKey(intercept: false).Key)
-                    {
-                        case ConsoleKey.D1:
-                            UseEuclideanMethod();
-                            break;
-                        case ConsoleKey.D2:
-                            UseSteinMethod();
-                            break;
-                        default:
-                            return;
-                    }
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("Invalid input.");
-                }
+                PrintMenu();
+                ChooseMethod();
 
                 Console.WriteLine("Try another method and/or numbers? (y/n)");
             } while (Console.ReadKey(intercept: true).Key == ConsoleKey.Y);
+        }
+
+        private static void PrintMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Select a method for calculating GDC:");
+            Console.WriteLine("1. Euclidean");
+            Console.WriteLine("2. Stein (only for two numbers)");
+            Console.WriteLine("3. Exit");
+            Console.Write(">> ");
+        }
+
+        private static void ChooseMethod()
+        {
+            try
+            {
+                switch (Console.ReadKey(intercept: false).Key)
+                {
+                    case ConsoleKey.D1:
+                        UseEuclideanMethod();
+                        break;
+                    case ConsoleKey.D2:
+                        UseSteinMethod();
+                        break;
+                    default:
+                        Environment.Exit(0);
+                        break;
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input.");
+            }
         }
 
         private static void UseEuclideanMethod()
