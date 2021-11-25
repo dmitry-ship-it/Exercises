@@ -13,31 +13,16 @@ namespace Gcd
                 throw new ArgumentNullException(nameof(digits));
             }
 
-            if (digits.Count(item => item == 0) == digits.Length)
+            // validate all digits
+            if (IsContainsSpecialValues(out var returnValue, digits) && returnValue != 0)
             {
-                throw new ArgumentException("All digits is 0.", nameof(digits));
+                return returnValue;
             }
 
-            // erase all zeros
-            digits = digits.Where(item => item != 0).ToArray();
+            // erase all zeros and use Math.Abs on the remaining values
+            digits = digits.Where(item => item != 0).Select(Math.Abs).ToArray();
 
-            for (var i = 0; i < digits.Length; i++)
-            {
-                switch (digits[i])
-                {
-                    case int.MinValue:
-                        throw new ArgumentOutOfRangeException(nameof(digits),
-                            "One of digits contains invalid value (int.MinValue).");
-                    case int.MaxValue:
-                    case -int.MaxValue:
-                    case 1:
-                        return 1;
-                    case < 0:
-                        digits[i] = -digits[i];
-                        break;
-                }
-            }
-
+            // main loop
             while (!IsMembersEqual(digits))
             {
                 SubtractMin(digits);
@@ -57,6 +42,110 @@ namespace Gcd
             elapsedTicks = stopwatch.ElapsedTicks;
 
             return result;
+        }
+
+        public static int GetGcdByStein(int first, int second)
+        {
+            if (IsContainsSpecialValues(out var returnValue, first, second) && returnValue != 0)
+            {
+                return returnValue;
+            }
+
+            // this method requires positive numbers
+            if (first < 0)
+            {
+                first = -first;
+            }
+
+            if (second < 0)
+            {
+                second = -second;
+            }
+
+            var factor = 1;
+
+            // main loop
+            while (first != 0 && second != 0)
+            {
+                if (first % 2 == 0 && second % 2 == 0)
+                {
+                    factor <<= 1;
+                    first >>= 1;
+                    second >>= 1;
+                }
+                else if (first % 2 == 0)
+                {
+                    first >>= 1;
+                }
+                else if (second % 2 == 0)
+                {
+                    second >>= 1;
+                }
+                else if (first < second)
+                {
+                    second = (second - first) >> 1;
+                }
+                else // (second > first)
+                {
+                    first = (first - second) >> 1;
+                }
+            }
+
+            return first == 0
+                ? second * factor
+                : first * factor;
+        }
+
+        public static int GetGcdByStein(out long elapsedTicks, int first, int second)
+        {
+            var stopwatch = new Stopwatch();
+
+            stopwatch.Start();
+            var result = GetGcdByStein(first, second);
+            stopwatch.Stop();
+
+            elapsedTicks = stopwatch.ElapsedTicks;
+
+            return result;
+        }
+
+        private static bool IsContainsSpecialValues(out int returnValue, params int[] digits)
+        {
+            if (digits is null || digits.Length < 1)
+            {
+                throw new ArgumentNullException(nameof(digits));
+            }
+
+            if (digits.Contains(int.MinValue))
+            {
+                throw new ArgumentOutOfRangeException(nameof(digits),
+                    "One of digits contains invalid value (int.MinValue).");
+            }
+
+            returnValue = 0;
+
+            if (IsMembersEqual(digits))
+            {
+                if (digits[0] == 0)
+                {
+                    throw new ArgumentException("All digits are 0 at the same time.");
+                }
+
+                returnValue = Math.Abs(digits[0]) == int.MaxValue
+                    ? int.MaxValue
+                    : Math.Abs(digits[0]);
+
+                return true;
+            }
+
+            // if one of values is int.MaxValue
+            if (digits.Contains(int.MaxValue))
+            {
+                returnValue = 1;
+                return true;
+            }
+
+            return false;
         }
 
         private static bool IsMembersEqual(int[] digits)
@@ -83,80 +172,6 @@ namespace Gcd
                     array[i] -= min;
                 }
             }
-        }
-
-        public static int GetGcdByStein(int first, int second)
-        {
-            if (first == 0 && second == 0)
-            {
-                throw new ArgumentException("All numbers are 0 at the same time.");
-            }
-
-            if (first == int.MinValue || second == int.MinValue)
-            {
-                throw new ArgumentOutOfRangeException(nameof(first),
-                    "One or two numbers are invalid (int.MinValue).");
-            }
-
-            if (first == 1 || second == 1 || first == int.MaxValue || second == int.MaxValue)
-            {
-                return 1;
-            }
-
-            if (first < 0)
-            {
-                first = -first;
-            }
-
-            if (second < 0)
-            {
-                second = -second;
-            }
-
-            var factor = 1;
-
-            while (first != 0 && second != 0)
-            {
-                if (first % 2 == 0 && second % 2 == 0)
-                {
-                    factor <<= 1;
-                    first >>= 1;
-                    second >>= 1;
-                }
-                else if (first % 2 == 0)
-                {
-                    first >>= 1;
-                }
-                else if (second % 2 == 0)
-                {
-                    second >>= 1;
-                }
-                else if (first < second)
-                {
-                    second = (second - first) >> 1;
-                }
-                else
-                {
-                    first = (first - second) >> 1;
-                }
-            }
-
-            return first == 0
-                ? second * factor
-                : first * factor;
-        }
-
-        public static int GetGcdByStein(out long elapsedTicks, int first, int second)
-        {
-            var stopwatch = new Stopwatch();
-
-            stopwatch.Start();
-            var result = GetGcdByStein(first, second);
-            stopwatch.Stop();
-
-            elapsedTicks = stopwatch.ElapsedTicks;
-
-            return result;
         }
     }
 }

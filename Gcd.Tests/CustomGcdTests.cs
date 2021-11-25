@@ -21,6 +21,7 @@ namespace Gcd.Tests
         [TestCase(0, -301, ExpectedResult = 301)]
         [TestCase(10927782, 0, ExpectedResult = 10927782)]
         [TestCase(-1590771464, 0, ExpectedResult = 1590771464)]
+        [TestCase(int.MaxValue, int.MaxValue, ExpectedResult = int.MaxValue)]
         public int GetGcdByEuclidean_WithTwoArguments(int a, int b) => GetGcdByEuclidean(a, b);
 
         [TestCase(100, 60, 40, ExpectedResult = 20)]
@@ -81,6 +82,7 @@ namespace Gcd.Tests
         [TestCase(0, -301, ExpectedResult = 301)]
         [TestCase(10927782, 0, ExpectedResult = 10927782)]
         [TestCase(-1590771464, 0, ExpectedResult = 1590771464)]
+        [TestCase(int.MaxValue, int.MaxValue, ExpectedResult = int.MaxValue)]
         public int GetGcdByStein_WithTwoArguments(int a, int b) => GetGcdByStein(a, b);
 
         [Test]
