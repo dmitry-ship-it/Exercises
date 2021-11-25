@@ -68,14 +68,14 @@ namespace Gcd
             Console.WriteLine("Enter two numbers separated by space:");
 
             var input = Parse(Console.ReadLine());
-            
+
             if (input.Length != 2)
             {
                 Console.WriteLine("Not TWO digits entered.");
                 Console.WriteLine();
                 return;
             }
-            
+
             Console.WriteLine($"GCD of this numbers is {CustomGcd.GetGcdByStein(input[0], input[1])}.");
             Console.WriteLine();
         }
@@ -86,7 +86,7 @@ namespace Gcd
             {
                 throw new ArgumentNullException(nameof(s));
             }
-            
+
             var splitted = s
                 .Split(' ')
                 .Where(item => !string.IsNullOrWhiteSpace(item))

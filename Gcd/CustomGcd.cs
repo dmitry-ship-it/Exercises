@@ -85,7 +85,7 @@ namespace Gcd
                 {
                     second = (second - first) >> 1;
                 }
-                else // (second > first)
+                else // (first > second)
                 {
                     first = (first - second) >> 1;
                 }
@@ -109,6 +109,15 @@ namespace Gcd
             return result;
         }
 
+        /// <summary>
+        /// Method to check for special values - <b>0, 1, int.MinValue, int.MaxValue</b>.
+        /// </summary>
+        /// <param name="returnValue"><b><i>If this value is set to a nonzero value, then the GCD method should return it.</i></b></param>
+        /// <param name="digits">Array of numbers.</param>
+        /// <returns><b>true</b> if array contains special value(s), <b>false</b> if not.</returns>
+        /// <exception cref="ArgumentNullException">Array of numbers is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Throws if one of special values is int.MinValue.</exception>
+        /// <exception cref="ArgumentException">Throws if all numbers are 0.</exception>
         private static bool IsContainsSpecialValues(out int returnValue, params int[] digits)
         {
             if (digits is null || digits.Length < 1)
