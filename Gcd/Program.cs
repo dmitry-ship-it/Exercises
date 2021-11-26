@@ -47,6 +47,10 @@ namespace Gcd
             {
                 Console.WriteLine("Invalid input.");
             }
+            catch (OverflowException)
+            {
+                Console.WriteLine("One of numbers in too large.");
+            }
         }
 
         private static void UseEuclideanMethod()
@@ -57,7 +61,8 @@ namespace Gcd
 
             var parsed = Parse(Console.ReadLine());
 
-            Console.WriteLine($"GCD of this numbers is {CustomGcd.GetGcdByEuclidean(parsed)}.");
+            Console.WriteLine($"GCD of this numbers is {CustomGcd.GetByEuclidean(out var ticks, parsed)}.");
+            Console.WriteLine($"Execution time: {TimeSpan.FromTicks(ticks).TotalMilliseconds}ms");
             Console.WriteLine();
         }
 
@@ -76,13 +81,14 @@ namespace Gcd
                 return;
             }
 
-            Console.WriteLine($"GCD of this numbers is {CustomGcd.GetGcdByStein(input[0], input[1])}.");
+            Console.WriteLine($"GCD of this numbers is {CustomGcd.GetByStein(out var ticks, input[0], input[1])}.");
+            Console.WriteLine($"Execution time: {TimeSpan.FromTicks(ticks).TotalMilliseconds}ms");
             Console.WriteLine();
         }
 
         private static int[] Parse(string s)
         {
-            if (s is null)
+            if (string.IsNullOrWhiteSpace(s))
             {
                 throw new ArgumentNullException(nameof(s));
             }

@@ -6,7 +6,7 @@ namespace Gcd
 {
     public static class CustomGcd
     {
-        public static int GetGcdByEuclidean(params int[] digits)
+        public static int GetByEuclidean(params int[] digits)
         {
             if (digits is null || digits.Length < 1)
             {
@@ -31,12 +31,12 @@ namespace Gcd
             return digits[0];
         }
 
-        public static int GetGcdByEuclidean(out long elapsedTicks, params int[] digits)
+        public static int GetByEuclidean(out long elapsedTicks, params int[] digits)
         {
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            var result = GetGcdByEuclidean(digits);
+            var result = GetByEuclidean(digits);
             stopwatch.Stop();
 
             elapsedTicks = stopwatch.ElapsedTicks;
@@ -44,7 +44,7 @@ namespace Gcd
             return result;
         }
 
-        public static int GetGcdByStein(int first, int second)
+        public static int GetByStein(int first, int second)
         {
             if (IsContainsSpecialValues(out var returnValue, first, second) && returnValue != 0)
             {
@@ -96,12 +96,12 @@ namespace Gcd
                 : first * factor;
         }
 
-        public static int GetGcdByStein(out long elapsedTicks, int first, int second)
+        public static int GetByStein(out long elapsedTicks, int first, int second)
         {
             var stopwatch = new Stopwatch();
 
             stopwatch.Start();
-            var result = GetGcdByStein(first, second);
+            var result = GetByStein(first, second);
             stopwatch.Stop();
 
             elapsedTicks = stopwatch.ElapsedTicks;

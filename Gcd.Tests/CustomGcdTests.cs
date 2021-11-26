@@ -22,7 +22,7 @@ namespace Gcd.Tests
         [TestCase(10927782, 0, ExpectedResult = 10927782)]
         [TestCase(-1590771464, 0, ExpectedResult = 1590771464)]
         [TestCase(int.MaxValue, int.MaxValue, ExpectedResult = int.MaxValue)]
-        public int GetGcdByEuclidean_WithTwoArguments(int a, int b) => GetGcdByEuclidean(a, b);
+        public int GetGcdByEuclidean_WithTwoArguments(int a, int b) => GetByEuclidean(a, b);
 
         [TestCase(100, 60, 40, ExpectedResult = 20)]
         [TestCase(5, 5, 5, ExpectedResult = 5)]
@@ -32,7 +32,7 @@ namespace Gcd.Tests
         [TestCase(-1, -2, -3, ExpectedResult = 1)]
         [TestCase(15, 5, 45, ExpectedResult = 5)]
         [TestCase(0, 0, -1, ExpectedResult = 1)]
-        public int GetGcdByEuclidean_WithThreeArguments(int a, int b, int c) => GetGcdByEuclidean(a, b, c);
+        public int GetGcdByEuclidean_WithThreeArguments(int a, int b, int c) => GetByEuclidean(a, b, c);
 
         [TestCase(-10, 35, 90, 55, -105, ExpectedResult = 5)]
         [TestCase(1, 213124, -54654, -123124, 65765, 44444, -7, 1234567, int.MaxValue, ExpectedResult = 1)]
@@ -44,11 +44,11 @@ namespace Gcd.Tests
         [TestCase(3, -3, 3, ExpectedResult = 3)]
         [TestCase(-7, -7, ExpectedResult = 7)]
         [TestCase(123413, 943578, 123413, 943578, 943578, int.MaxValue, ExpectedResult = 1)]
-        public int GetGcdByEuclidean_WithParams(params int[] digits) => GetGcdByEuclidean(digits);
+        public int GetGcdByEuclidean_WithParams(params int[] digits) => GetByEuclidean(digits);
 
         [Test]
         public void GetGcdByEuclidean_WithAllZeroNumbers_ThrowArgumentException() =>
-            Assert.Throws<ArgumentException>(() => GetGcdByEuclidean(0, 0, 0, 0, 0, 0, 0, 0, 0),
+            Assert.Throws<ArgumentException>(() => GetByEuclidean(0, 0, 0, 0, 0, 0, 0, 0, 0),
                 "All numbers cannot be 0 at the same time.");
 
         [TestCase(int.MinValue, 0, 34, 78)]
@@ -56,14 +56,14 @@ namespace Gcd.Tests
         [TestCase(13, int.MinValue, int.MinValue)]
         [TestCase(int.MinValue, int.MinValue, int.MaxValue)]
         public void GetGcdByEuclidean_WithOneOrMoreMinIntegers_ThrowArgumentOutOfRangeException(params int[] digits) =>
-            Assert.Throws<ArgumentOutOfRangeException>(() => GetGcdByEuclidean(digits),
+            Assert.Throws<ArgumentOutOfRangeException>(() => GetByEuclidean(digits),
                 $"Number cannot be {int.MinValue}.");
 
         [Test]
         public void GetGcdByEuclidean_WithNullArray_ThrowArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>(() => GetGcdByEuclidean(null), "Array is null.");
-            Assert.Throws<ArgumentNullException>(() => GetGcdByEuclidean(Array.Empty<int>()), "Array is empty.");
+            Assert.Throws<ArgumentNullException>(() => GetByEuclidean(null), "Array is null.");
+            Assert.Throws<ArgumentNullException>(() => GetByEuclidean(Array.Empty<int>()), "Array is empty.");
         }
 
         [TestCase(50, 250, ExpectedResult = 50)]
@@ -83,11 +83,11 @@ namespace Gcd.Tests
         [TestCase(10927782, 0, ExpectedResult = 10927782)]
         [TestCase(-1590771464, 0, ExpectedResult = 1590771464)]
         [TestCase(int.MaxValue, int.MaxValue, ExpectedResult = int.MaxValue)]
-        public int GetGcdByStein_WithTwoArguments(int a, int b) => GetGcdByStein(a, b);
+        public int GetGcdByStein_WithTwoArguments(int a, int b) => GetByStein(a, b);
 
         [Test]
         public void GetGcdByStein_WithTwoZeroNumbers_ThrowArgumentException() =>
-            Assert.Throws<ArgumentException>(() => GetGcdByStein(0, 0), "All numbers cannot be 0 at the same time.");
+            Assert.Throws<ArgumentException>(() => GetByStein(0, 0), "All numbers cannot be 0 at the same time.");
 
         [TestCase(int.MinValue, 0)]
         [TestCase(0, int.MinValue)]
@@ -95,6 +95,6 @@ namespace Gcd.Tests
         [TestCase(13, int.MinValue)]
         [TestCase(int.MinValue, int.MinValue)]
         public void GetGcdByStein_WithOneOrTwoMinIntegers_ThrowArgumentOutOfRangeException(int a, int b) =>
-            Assert.Throws<ArgumentOutOfRangeException>(() => GetGcdByStein(a, b), $"Number cannot be {int.MinValue}.");
+            Assert.Throws<ArgumentOutOfRangeException>(() => GetByStein(a, b), $"Number cannot be {int.MinValue}.");
     }
 }
