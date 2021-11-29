@@ -14,12 +14,12 @@ namespace Gcd
             }
 
             // validate all digits
-            if (IsContainsSpecialValues(out var returnValue, digits) && returnValue != 0)
+            if (IsContainsSpecialValues(out var returnValue, digits) && returnValue is not null)
             {
-                return returnValue;
+                return (int) returnValue;
             }
 
-            // erase all zeros and use Math.Abs on the remaining values
+            // erase all zeros and apply Math.Abs on the remaining values
             digits = digits.Where(item => item != 0).Select(Math.Abs).ToArray();
 
             // main loop
@@ -46,9 +46,9 @@ namespace Gcd
 
         public static int GetByStein(int first, int second)
         {
-            if (IsContainsSpecialValues(out var returnValue, first, second) && returnValue != 0)
+            if (IsContainsSpecialValues(out var returnValue, first, second) && returnValue is not null)
             {
-                return returnValue;
+                return (int) returnValue;
             }
 
             // this method requires positive numbers
@@ -112,13 +112,13 @@ namespace Gcd
         /// <summary>
         /// Method to check for special values - <b>0, 1, int.MinValue, int.MaxValue</b>.
         /// </summary>
-        /// <param name="returnValue"><b><i>If this value is set to a nonzero value, then the GCD method should return it.</i></b></param>
+        /// <param name="returnValue"><b><i>If this value is set to a non null value, then the GCD method should return it.</i></b></param>
         /// <param name="digits">Array of numbers.</param>
         /// <returns><b>true</b> if array contains special value(s), <b>false</b> if not.</returns>
         /// <exception cref="ArgumentNullException">Array of numbers is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Throws if one of special values is int.MinValue.</exception>
         /// <exception cref="ArgumentException">Throws if all numbers are 0.</exception>
-        private static bool IsContainsSpecialValues(out int returnValue, params int[] digits)
+        private static bool IsContainsSpecialValues(out int? returnValue, params int[] digits)
         {
             if (digits is null || digits.Length < 1)
             {
@@ -131,7 +131,7 @@ namespace Gcd
                     "One of digits contains invalid value (int.MinValue).");
             }
 
-            returnValue = 0;
+            returnValue = null;
 
             if (IsMembersEqual(digits))
             {
