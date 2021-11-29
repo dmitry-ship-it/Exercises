@@ -13,8 +13,9 @@ namespace Gcd
                 throw new ArgumentNullException(nameof(digits));
             }
 
-            // validate all digits
-            if (IsContainsSpecialValues(out var returnValue, digits) && returnValue is not null)
+            // check for special values
+            var returnValue = DetectSpecialValues(digits);
+            if (returnValue is not null)
             {
                 return (int) returnValue;
             }
@@ -46,7 +47,9 @@ namespace Gcd
 
         public static int GetByStein(int first, int second)
         {
-            if (IsContainsSpecialValues(out var returnValue, first, second) && returnValue is not null)
+            // check for special values
+            var returnValue = DetectSpecialValues(first, second);
+            if (returnValue is not null)
             {
                 return (int) returnValue;
             }
@@ -85,15 +88,14 @@ namespace Gcd
                 {
                     second = (second - first) >> 1;
                 }
-                else // (first > second)
+                else // (first >= second)
                 {
                     first = (first - second) >> 1;
                 }
             }
 
-            return first == 0
-                ? second * factor
-                : first * factor;
+            // one of the result values will be 0, the other - some positive value
+            return Math.Max(factor * first, factor * second);
         }
 
         public static int GetByStein(out long elapsedTicks, int first, int second)
@@ -112,13 +114,12 @@ namespace Gcd
         /// <summary>
         /// Method to check for special values - <b>0, 1, int.MinValue, int.MaxValue</b>.
         /// </summary>
-        /// <param name="returnValue"><b><i>If this value is set to a non null value, then the GCD method should return it.</i></b></param>
         /// <param name="digits">Array of numbers.</param>
-        /// <returns><b>true</b> if array contains special value(s), <b>false</b> if not.</returns>
+        /// <returns><i>If returns non <b>null</b> value, then the GCD method should return it.</i></returns>
         /// <exception cref="ArgumentNullException">Array of numbers is null.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Throws if one of special values is int.MinValue.</exception>
         /// <exception cref="ArgumentException">Throws if all numbers are 0.</exception>
-        private static bool IsContainsSpecialValues(out int? returnValue, params int[] digits)
+        private static int? DetectSpecialValues(params int[] digits)
         {
             if (digits is null || digits.Length < 1)
             {
@@ -131,8 +132,6 @@ namespace Gcd
                     "One of digits contains invalid value (int.MinValue).");
             }
 
-            returnValue = null;
-
             if (IsMembersEqual(digits))
             {
                 if (digits[0] == 0)
@@ -140,21 +139,12 @@ namespace Gcd
                     throw new ArgumentException("All digits are 0 at the same time.");
                 }
 
-                returnValue = Math.Abs(digits[0]) == int.MaxValue
-                    ? int.MaxValue
-                    : Math.Abs(digits[0]);
-
-                return true;
+                // if all values are the same then return it
+                return Math.Abs(digits[0]);
             }
 
-            // if one of values is int.MaxValue
-            if (digits.Contains(int.MaxValue))
-            {
-                returnValue = 1;
-                return true;
-            }
-
-            return false;
+            // if one of values is int.MaxValue then return 1
+            return digits.Contains(int.MaxValue) ? 1 : null;
         }
 
         private static bool IsMembersEqual(int[] digits)
