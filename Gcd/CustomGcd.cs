@@ -21,7 +21,7 @@ namespace Gcd
             }
 
             // erase all zeros and apply Math.Abs on the remaining values
-            digits = digits.Where(item => item != 0).Select(Math.Abs).ToArray();
+            digits = EraseValueAndApplyAbs(digits, valueToRemove: 0);
 
             // main loop
             while (!IsMembersEqual(digits))
@@ -55,42 +55,33 @@ namespace Gcd
             }
 
             // this method requires positive numbers
-            if (first < 0)
-            {
-                first = -first;
-            }
-
-            if (second < 0)
-            {
-                second = -second;
-            }
+            first = CustomAbs(first);
+            second = CustomAbs(second);
 
             var factor = 1;
 
             // main loop
             while (first != 0 && second != 0)
             {
-                if (first % 2 == 0 && second % 2 == 0)
+                switch (first, second)
                 {
-                    factor <<= 1;
-                    first >>= 1;
-                    second >>= 1;
-                }
-                else if (first % 2 == 0)
-                {
-                    first >>= 1;
-                }
-                else if (second % 2 == 0)
-                {
-                    second >>= 1;
-                }
-                else if (first < second)
-                {
-                    second = (second - first) >> 1;
-                }
-                else // (first >= second)
-                {
-                    first = (first - second) >> 1;
+                    case var (a, b) when a % 2 == 0 && b % 2 == 0:
+                        factor <<= 1;
+                        first >>= 1;
+                        second >>= 1;
+                        break;
+                    case var (a, _) when a % 2 == 0:
+                        first >>= 1;
+                        break;
+                    case var (_, b) when b % 2 == 0:
+                        second >>= 1;
+                        break;
+                    case var (a, b) when a < b:
+                        second = (second - first) >> 1;
+                        break;
+                    default: // when a >= b
+                        first = (first - second) >> 1;
+                        break;
                 }
             }
 
@@ -149,15 +140,12 @@ namespace Gcd
 
         private static bool IsMembersEqual(int[] digits)
         {
-            for (var i = 1; i < digits.Length; i++)
+            if (digits is null || digits.Length < 1)
             {
-                if (digits[i - 1] != digits[i])
-                {
-                    return false;
-                }
+                throw new ArgumentNullException(nameof(digits));
             }
 
-            return true;
+            return digits.All(i => i == digits[0]);
         }
 
         private static void SubtractMin(int[] array)
@@ -171,6 +159,35 @@ namespace Gcd
                     array[i] -= min;
                 }
             }
+        }
+
+        private static int CustomAbs(int value)
+        {
+            return value switch
+            {
+                >= 0 => value,
+                int.MinValue => throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be int.MinValue."),
+                _ => -value
+            };
+        }
+
+        private static int[] EraseValueAndApplyAbs(int[] digits, int valueToRemove)
+        {
+            var valueToRemoveCount = digits.Count(digit => digit == valueToRemove);
+
+            var result = new int[digits.Length - valueToRemoveCount];
+            var resultIterator = 0;
+
+            foreach (var digit in digits)
+            {
+                if (digit != valueToRemove)
+                {
+                    result[resultIterator] = CustomAbs(digit);
+                    resultIterator++;
+                }
+            }
+
+            return result;
         }
     }
 }
