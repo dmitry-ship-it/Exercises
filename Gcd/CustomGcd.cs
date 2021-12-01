@@ -20,8 +20,7 @@ namespace Gcd
                 return (int) returnValue;
             }
 
-            // erase all zeros and apply Math.Abs on the remaining values
-            digits = EraseValueAndApplyAbs(digits, valueToRemove: 0);
+            digits = EraseZerosAndApplyAbs(digits);
 
             // main loop
             while (!IsMembersEqual(digits))
@@ -171,16 +170,16 @@ namespace Gcd
             };
         }
 
-        private static int[] EraseValueAndApplyAbs(int[] digits, int valueToRemove)
+        private static int[] EraseZerosAndApplyAbs(int[] digits)
         {
-            var valueToRemoveCount = digits.Count(digit => digit == valueToRemove);
+            var valueToRemoveCount = digits.Count(digit => digit == 0);
 
             var result = new int[digits.Length - valueToRemoveCount];
             var resultIterator = 0;
 
             foreach (var digit in digits)
             {
-                if (digit != valueToRemove)
+                if (digit != 0)
                 {
                     result[resultIterator] = CustomAbs(digit);
                     resultIterator++;
