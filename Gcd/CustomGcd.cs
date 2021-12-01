@@ -130,7 +130,7 @@ namespace Gcd
                 }
 
                 // if all values are the same then return it
-                return Math.Abs(digits[0]);
+                return CustomAbs(digits[0]);
             }
 
             // if one of values is int.MaxValue then return 1
