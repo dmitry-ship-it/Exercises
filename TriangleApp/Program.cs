@@ -2,11 +2,12 @@
 
 namespace TriangleApp
 {
-    internal class Program
+    internal static class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var triangle = new Triangle(11, 12, 13);
+            Console.WriteLine(triangle.GetArea());
         }
     }
 }
