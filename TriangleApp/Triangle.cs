@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TriangleApp
 {
-    internal class Triangle
+    public class Triangle
     {
         private readonly List<double> _sides;
 
@@ -37,9 +37,9 @@ namespace TriangleApp
             }
 
             var halfPerimeter = GetPerimeter() / 2;
-            return Math.Sqrt(halfPerimeter 
-                * (halfPerimeter - _sides[0]) 
-                * (halfPerimeter - _sides[1]) 
+            return Math.Sqrt(halfPerimeter
+                * (halfPerimeter - _sides[0])
+                * (halfPerimeter - _sides[1])
                 * (halfPerimeter - _sides[2]));
         }
     }
