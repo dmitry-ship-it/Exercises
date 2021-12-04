@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TriangleApp
 {
@@ -37,10 +38,44 @@ namespace TriangleApp
             }
 
             var halfPerimeter = GetPerimeter() / 2;
+
             return Math.Sqrt(halfPerimeter
                 * (halfPerimeter - _sides[0])
                 * (halfPerimeter - _sides[1])
                 * (halfPerimeter - _sides[2]));
+        }
+
+        public override string ToString()
+        {
+            if (!IsTriangle())
+            {
+                return "This triangle does not exist.";
+            }
+
+            var result = new StringBuilder();
+
+            result.Append("Sides:");
+            result.Append(Environment.NewLine);
+
+            result.Append("a = ");
+            result.Append(_sides[0]);
+            result.Append(Environment.NewLine);
+            result.Append("b = ");
+            result.Append(_sides[1]);
+            result.Append(Environment.NewLine);
+            result.Append("c = ");
+            result.Append(_sides[2]);
+            result.Append(Environment.NewLine);
+
+            result.Append("Perimeter = ");
+            result.Append(GetPerimeter());
+            result.Append(Environment.NewLine);
+
+            result.Append("Area = ");
+            result.Append(GetArea());
+            result.Append(Environment.NewLine);
+
+            return result.ToString();
         }
     }
 }
