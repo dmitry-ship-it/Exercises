@@ -44,6 +44,11 @@ namespace TriangleApp
             }
 
             var parsedSides = Parse(sides);
+            if (parsedSides.Length != 3)
+            {
+                throw new ArgumentException("Тot THREE side lengths were enterded.");
+            }
+
             var triangle = new Triangle(parsedSides[0], parsedSides[1], parsedSides[2]);
 
             Console.WriteLine(triangle);

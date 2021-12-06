@@ -97,7 +97,7 @@ namespace TriangleApp.Tests
             Assert.AreEqual(expected, result, tolerance);
         }
 
-        static readonly object[] InvalidSides =
+        private static readonly object[] InvalidSides =
         {
             new object[] {1, 2, 3},
             new object[] {2, 3, 5},

@@ -47,11 +47,6 @@ namespace TriangleApp
 
         public override string ToString()
         {
-            if (!IsTriangle())
-            {
-                return "This triangle does not exist.";
-            }
-
             var result = new StringBuilder();
 
             result.Append("Sides:");
@@ -67,13 +62,21 @@ namespace TriangleApp
             result.Append(_sides[2]);
             result.Append(Environment.NewLine);
 
-            result.Append("Perimeter = ");
-            result.Append(GetPerimeter());
-            result.Append(Environment.NewLine);
+            if (IsTriangle())
+            {
+                result.Append("Perimeter = ");
+                result.Append(GetPerimeter());
+                result.Append(Environment.NewLine);
 
-            result.Append("Area = ");
-            result.Append(GetArea());
-            result.Append(Environment.NewLine);
+                result.Append("Area = ");
+                result.Append(GetArea());
+                result.Append(Environment.NewLine);
+            }
+            else
+            {
+                result.Append("This triangle does not exist.");
+                result.Append(Environment.NewLine);
+            }
 
             return result.ToString();
         }
