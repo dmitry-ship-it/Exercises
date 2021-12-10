@@ -13,9 +13,29 @@
             _z = z;
         }
 
-        public Vector3 Add(Vector3 other)
+        public static Vector3 Add(Vector3 lhs, Vector3 rhs)
         {
-            return this + other;
+            return lhs + rhs;
+        }
+
+        public static Vector3 Substruct(Vector3 lhs, Vector3 rhs)
+        {
+            return lhs - rhs;
+        }
+
+        public static double DotProduct(Vector3 lhs, Vector3 rhs)
+        {
+            return lhs * rhs;
+        }
+
+        public static Vector3 CrossProduct(Vector3 lhs, Vector3 rhs)
+        {
+            return lhs & rhs;
+        }
+
+        public static Vector3 Scale(Vector3 vector, double scalar)
+        {
+            return vector * scalar;
         }
 
         public static Vector3 operator +(Vector3 lhs, Vector3 rhs)
@@ -26,11 +46,6 @@
                 lhs._z + rhs._z);
         }
 
-        public Vector3 Substruct(Vector3 other)
-        {
-            return this - other;
-        }
-
         public static Vector3 operator -(Vector3 lhs, Vector3 rhs)
         {
             return new Vector3(
@@ -39,34 +54,19 @@
                 lhs._z - rhs._z);
         }
 
-        public double DotProduct(Vector3 other)
-        {
-            return this * other;
-        }
-
         public static double operator *(Vector3 lhs, Vector3 rhs)
         {
-            return lhs._x * rhs._x
-                + lhs._y * rhs._y
-                + lhs._z * rhs._z;
-        }
-
-        public Vector3 CrossProduct(Vector3 other)
-        {
-            return this & other;
+            return (lhs._x * rhs._x)
+                + (lhs._y * rhs._y)
+                + (lhs._z * rhs._z);
         }
 
         public static Vector3 operator &(Vector3 lhs, Vector3 rhs)
         {
             return new Vector3(
-                lhs._y * rhs._z - lhs._z * rhs._y,
-                lhs._z * rhs._x - lhs._x * rhs._z,
-                lhs._x * rhs._y - lhs._y * rhs._x);
-        }
-
-        public Vector3 Scale(double scalar)
-        {
-            return this * scalar;
+                (lhs._y * rhs._z) - (lhs._z * rhs._y),
+                (lhs._z * rhs._x) - (lhs._x * rhs._z),
+                (lhs._x * rhs._y) - (lhs._y * rhs._x));
         }
 
         public static Vector3 operator *(Vector3 vector, double scalar)
@@ -75,6 +75,12 @@
                 vector._x * scalar,
                 vector._y * scalar,
                 vector._z * scalar);
+
+        }
+
+        public double Length()
+        {
+            return System.Math.Sqrt(this * this);
         }
 
         public override string ToString()
