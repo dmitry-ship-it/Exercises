@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TriangleApp
@@ -27,7 +28,7 @@ namespace TriangleApp
 
         public double GetPerimeter()
         {
-            return IsTriangle() ? _sides[0] + _sides[1] + _sides[2] : double.NaN;
+            return IsTriangle() ? _sides.Sum() : double.NaN;
         }
 
         public double GetArea()
@@ -39,10 +40,8 @@ namespace TriangleApp
 
             var halfPerimeter = GetPerimeter() / 2;
 
-            return Math.Sqrt(halfPerimeter
-                * (halfPerimeter - _sides[0])
-                * (halfPerimeter - _sides[1])
-                * (halfPerimeter - _sides[2]));
+            return Math.Sqrt(halfPerimeter * _sides.Select(side => halfPerimeter - side)
+                    .Aggregate((currentSide, nextSide) => currentSide * nextSide));
         }
 
         public override string ToString()
