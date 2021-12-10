@@ -41,7 +41,7 @@ namespace TriangleApp
             var halfPerimeter = GetPerimeter() / 2;
 
             return Math.Sqrt(halfPerimeter * _sides.Select(side => halfPerimeter - side)
-                    .Aggregate((currentSide, nextSide) => currentSide * nextSide));
+                    .Aggregate((current, next) => current * next));
         }
 
         public override string ToString()
