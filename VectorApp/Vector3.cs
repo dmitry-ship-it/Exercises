@@ -2,15 +2,15 @@
 {
     public class Vector3
     {
-        private readonly double _x;
-        private readonly double _y;
-        private readonly double _z;
+        public double X { get; init; }
+        public double Y { get; init; }
+        public double Z { get; init; }
 
         public Vector3(double x, double y, double z)
         {
-            _x = x;
-            _y = y;
-            _z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         public static Vector3 Add(Vector3 lhs, Vector3 rhs)
@@ -41,40 +41,40 @@
         public static Vector3 operator +(Vector3 lhs, Vector3 rhs)
         {
             return new Vector3(
-                lhs._x + rhs._x,
-                lhs._y + rhs._y,
-                lhs._z + rhs._z);
+                lhs.X + rhs.X,
+                lhs.Y + rhs.Y,
+                lhs.Z + rhs.Z);
         }
 
         public static Vector3 operator -(Vector3 lhs, Vector3 rhs)
         {
             return new Vector3(
-                lhs._x - rhs._x,
-                lhs._y - rhs._y,
-                lhs._z - rhs._z);
+                lhs.X - rhs.X,
+                lhs.Y - rhs.Y,
+                lhs.Z - rhs.Z);
         }
 
         public static double operator *(Vector3 lhs, Vector3 rhs)
         {
-            return (lhs._x * rhs._x)
-                + (lhs._y * rhs._y)
-                + (lhs._z * rhs._z);
+            return (lhs.X * rhs.X)
+                + (lhs.Y * rhs.Y)
+                + (lhs.Z * rhs.Z);
         }
 
         public static Vector3 operator &(Vector3 lhs, Vector3 rhs)
         {
             return new Vector3(
-                (lhs._y * rhs._z) - (lhs._z * rhs._y),
-                (lhs._z * rhs._x) - (lhs._x * rhs._z),
-                (lhs._x * rhs._y) - (lhs._y * rhs._x));
+                (lhs.Y * rhs.Z) - (lhs.Z * rhs.Y),
+                (lhs.Z * rhs.X) - (lhs.X * rhs.Z),
+                (lhs.X * rhs.Y) - (lhs.Y * rhs.X));
         }
 
         public static Vector3 operator *(Vector3 vector, double scalar)
         {
             return new Vector3(
-                vector._x * scalar,
-                vector._y * scalar,
-                vector._z * scalar);
+                vector.X * scalar,
+                vector.Y * scalar,
+                vector.Z * scalar);
 
         }
 
@@ -85,7 +85,7 @@
 
         public override string ToString()
         {
-            return $"({_x};{_y};{_z})";
+            return $"({X}; {Y}; {Z})";
         }
     }
 }
