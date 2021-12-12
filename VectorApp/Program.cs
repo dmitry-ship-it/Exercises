@@ -69,27 +69,34 @@ namespace VectorApp
             Console.WriteLine();
             Console.WriteLine();
 
+            Console.WriteLine("First vector");
             var first = GetNewVector();
             Console.WriteLine();
+
+            Console.WriteLine("Second vector");
             var second = GetNewVector();
             Console.WriteLine();
 
             Console.WriteLine($"First vector: {first}, length = {first.Length()}");
             Console.WriteLine($"Second vector: {second}, length = {second.Length()}");
 
+            Vector3 result;
             switch (key)
             {
                 case ConsoleKey.D1:
-                    Console.WriteLine($"After add operation: {first + second}");
+                    result = first + second;
+                    Console.WriteLine($"After add operation: {result}, length = {result.Length()}");
                     break;
                 case ConsoleKey.D2:
-                    Console.WriteLine($"After substruct operation: {first - second}");
+                    result = first - second;
+                    Console.WriteLine($"After substruct operation: {result}, length = {result.Length()}");
                     break;
                 case ConsoleKey.D3:
                     Console.WriteLine($"Value after dot product operation: {first * second}");
                     break;
                 case ConsoleKey.D4:
-                    Console.WriteLine($"After cross product operation: {first & second}");
+                    result = first & second;
+                    Console.WriteLine($"After cross product operation: {result}, length = {result.Length()}");
                     break;
                 default:
                     throw new ArgumentException("Invalid operation.", nameof(key));
