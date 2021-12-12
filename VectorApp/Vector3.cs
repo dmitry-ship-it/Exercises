@@ -18,7 +18,7 @@
             return lhs + rhs;
         }
 
-        public static Vector3 Substruct(Vector3 lhs, Vector3 rhs)
+        public static Vector3 Subtruct(Vector3 lhs, Vector3 rhs)
         {
             return lhs - rhs;
         }
@@ -75,7 +75,6 @@
                 vector.X * scalar,
                 vector.Y * scalar,
                 vector.Z * scalar);
-
         }
 
         public double Length()
