@@ -32,22 +32,24 @@ namespace SignalStream
         public override int Read(byte[] buffer, int offset, int count)
         {
             var bytesRead = 0;
-            var persentStep = (int)Math.Round(_stream.Length / 10d);
+            var step = (int)_stream.Length / 10;
 
+            // if count of bytes is more than buffer length then use buffer.Length
             var length = count > buffer.Length
                 ? buffer.Length
                 : count;
-            for (var i = offset; i < length; i += persentStep)
+
+            for (var currentPosition = offset; currentPosition < length && currentPosition + step <= _stream.Length; currentPosition += step)
             {
-                if (i + persentStep > _stream.Length)
-                {
-                    bytesRead += _stream.Read(buffer, i, (int)_stream.Length - i);
-                    break;
-                }
+                bytesRead += _stream.Read(buffer, currentPosition, step);
+                TenthPartRead?.Invoke(this, new ReadPercentEventArgs() { Percent = bytesRead / step * 10 });
+            }
 
-                bytesRead += _stream.Read(buffer, i, persentStep);
-
-                TenthPartRead?.Invoke(this, new ReadPercentEventArgs() { Percent = bytesRead / persentStep * 10 });
+            // read remaining bytes
+            // usually remains about a dozen bytes
+            if (bytesRead < _stream.Length)
+            {
+                bytesRead += _stream.Read(buffer, bytesRead, (int)_stream.Length - bytesRead);
             }
 
             return bytesRead;
