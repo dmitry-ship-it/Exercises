@@ -31,7 +31,7 @@ namespace SecureStream
             }
             catch (IOException)
             {
-                Console.WriteLine("File not fount.");
+                Console.WriteLine("File not found.");
             }
         }
 
