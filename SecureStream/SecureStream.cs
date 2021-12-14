@@ -1,15 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecureStream
 {
     internal class SecureStream : Stream
     {
-        private Stream _stream;
+        private readonly Stream _stream;
+
+        private const string Password = "qwerty";
+
+        public SecureStream(Stream stream, string password)
+        {
+            if (password != Password)
+            {
+                throw new ArgumentException("Wrong password.");
+            }
+
+            _stream = stream;
+        }
 
         public override bool CanRead => _stream.CanRead;
 

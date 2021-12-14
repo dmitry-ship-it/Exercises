@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalStream", "StreamApp\SignalStream.csproj", "{0C2607BA-B599-4F03-ACDC-3005D275A8F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalStream", "SignalStream\SignalStream.csproj", "{0C2607BA-B599-4F03-ACDC-3005D275A8F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureStream", "SecureStream\SecureStream.csproj", "{C044FC7D-8A55-4634-B310-7CB1509880EC}"
 EndProject
