@@ -8,6 +8,16 @@ namespace SignalStream
 {
     internal class ReadPercentEventArgs : EventArgs
     {
-        public int Percent { get; set; }
+        public ReadPercentEventArgs(int percent)
+        {
+            if (percent < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(percent), "The percentage cannot be less than zero.");
+            }
+
+            Percent = percent;
+        }
+
+        public int Percent { get; init; }
     }
 }
