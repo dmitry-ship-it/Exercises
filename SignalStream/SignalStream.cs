@@ -42,7 +42,7 @@ namespace SignalStream
             for (var currentPosition = offset; currentPosition < length && currentPosition + step <= _stream.Length; currentPosition += step)
             {
                 bytesRead += _stream.Read(buffer, currentPosition, step);
-                TenthPartRead?.Invoke(this, new ReadPercentEventArgs() { Percent = bytesRead / step * 10 });
+                TenthPartRead?.Invoke(this, new ReadPercentEventArgs(bytesRead / step * 10));
             }
 
             // read remaining bytes
@@ -68,11 +68,6 @@ namespace SignalStream
         public override void Write(byte[] buffer, int offset, int count)
         {
             _stream.Write(buffer, offset, count);
-        }
-
-        protected virtual void OnTenthPartRead(ReadPercentEventArgs e)
-        {
-            TenthPartRead?.Invoke(this, e);
         }
     }
 }
