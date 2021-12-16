@@ -38,30 +38,15 @@ namespace MatrixApp
 
         public static Matrix Add(Matrix lhs, Matrix rhs)
         {
-            return lhs + rhs;
+            return MatricesOperation(lhs, rhs, Operation.Add);
         }
 
         public static Matrix Subtract(Matrix lhs, Matrix rhs)
         {
-            return lhs - rhs;
-        }
-
-        public static Matrix Multiply(Matrix lhs, Matrix rhs)
-        {
-            return lhs * rhs;
-        }
-
-        public static Matrix operator +(Matrix lhs, Matrix rhs)
-        {
-            return MatricesOperation(lhs, rhs, Operation.Add);
-        }
-
-        public static Matrix operator -(Matrix lhs, Matrix rhs)
-        {
             return MatricesOperation(lhs, rhs, Operation.Subtract);
         }
 
-        public static Matrix operator *(Matrix lhs, Matrix rhs)
+        public static Matrix Multiply(Matrix lhs, Matrix rhs)
         {
             if (lhs.Cols != rhs.Rows)
             {
@@ -80,6 +65,21 @@ namespace MatrixApp
             }
 
             return new Matrix(result);
+        }
+
+        public static Matrix operator +(Matrix lhs, Matrix rhs)
+        {
+            return Add(lhs, rhs);
+        }
+
+        public static Matrix operator -(Matrix lhs, Matrix rhs)
+        {
+            return Subtract(lhs, rhs);
+        }
+
+        public static Matrix operator *(Matrix lhs, Matrix rhs)
+        {
+            return Multiply(lhs, rhs);
         }
 
         public static bool IsEqualSizes(Matrix lhs, Matrix rhs)
