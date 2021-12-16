@@ -9,7 +9,6 @@ namespace MatrixApp
         {
             do
             {
-                Console.Clear();
                 PrintMenu();
                 ChooseAndExecuteOperation();
 
@@ -19,6 +18,7 @@ namespace MatrixApp
 
         private static void PrintMenu()
         {
+            Console.Clear();
             Console.WriteLine("Matrix App Menu");
             Console.WriteLine("1. Add two matrices");
             Console.WriteLine("2. Subtract two matrices");
@@ -46,18 +46,17 @@ namespace MatrixApp
 
         private static void GetMatricesAndExecuteOpeartion(ConsoleKey key)
         {
-            Matrix lhs;
-            Matrix rhs;
-
             Console.WriteLine();
             Console.WriteLine();
 
             try
             {
                 Console.WriteLine("First matrix:");
-                lhs = GetMatrix();
+                var lhs = GetMatrix();
+
                 Console.WriteLine("Second matrix:");
-                rhs = GetMatrix();
+                var rhs = GetMatrix();
+
                 ExecuteOperationAndPrintResult(lhs, rhs, key);
             }
             catch (ArgumentException ex)
@@ -146,12 +145,12 @@ namespace MatrixApp
 
         private static void ExecuteOperationAndPrintResult(Matrix lhs, Matrix rhs, ConsoleKey key)
         {
-            Matrix result = key switch
+            var result = key switch
             {
                 ConsoleKey.D1 => lhs + rhs,
                 ConsoleKey.D2 => lhs - rhs,
                 ConsoleKey.D3 => lhs * rhs,
-                _ => throw new ArgumentException("Invalid operation", nameof(key))
+                _ => throw new ArgumentException("Invalid operation.", nameof(key))
             };
 
             Console.WriteLine();

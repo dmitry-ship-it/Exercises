@@ -7,18 +7,8 @@ namespace MatrixApp
     {
         private readonly double[,] _elements;
 
-        public int Rows { get => _elements.GetLength(0); }
-        public int Cols { get => _elements.GetLength(1); }
-
-        public Matrix(int rows, int cols)
-        {
-            if (rows <= 0 || cols <= 0)
-            {
-                throw new ArgumentException("Rows and cols count cannot be less or equal zero.");
-            }
-
-            _elements = new double[rows, cols];
-        }
+        public int Rows => _elements.GetLength(0);
+        public int Cols => _elements.GetLength(1);
 
         public Matrix(double[,] elements)
         {
@@ -82,12 +72,6 @@ namespace MatrixApp
             return Multiply(lhs, rhs);
         }
 
-        public static bool IsEqualSizes(Matrix lhs, Matrix rhs)
-        {
-            return lhs.Rows == rhs.Rows
-                && lhs.Cols == rhs.Cols;
-        }
-
         public override string ToString()
         {
             var result = new StringBuilder();
@@ -145,6 +129,12 @@ namespace MatrixApp
             }
 
             return new Matrix(result);
+        }
+
+        private static bool IsEqualSizes(Matrix lhs, Matrix rhs)
+        {
+            return lhs.Rows == rhs.Rows
+                && lhs.Cols == rhs.Cols;
         }
     }
 }
