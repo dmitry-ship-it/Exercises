@@ -85,6 +85,12 @@ namespace MatrixApp
             return result.ToString();
         }
 
+        public static bool IsEqualSizes(Matrix lhs, Matrix rhs)
+        {
+            return lhs.Rows == rhs.Rows
+                && lhs.Cols == rhs.Cols;
+        }
+
         private void AppendRow(StringBuilder result, int row)
         {
             for (var j = 0; j < Cols; j++)
@@ -129,12 +135,6 @@ namespace MatrixApp
             }
 
             return new Matrix(result);
-        }
-
-        private static bool IsEqualSizes(Matrix lhs, Matrix rhs)
-        {
-            return lhs.Rows == rhs.Rows
-                && lhs.Cols == rhs.Cols;
         }
     }
 }
