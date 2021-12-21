@@ -10,11 +10,11 @@ namespace BinaryTreeTask
         {
             var rand = new Random();
 
-            var tree = new BinaryTree<string>();
+            var tree = new BinaryTree<int>();
 
-            for (var i = 0; i < 7405; i++)
+            for (var i = 0; i < 5000; i++)
             {
-                tree.Insert("some string");
+                tree.Insert(rand.Next(0, 201));
             }
 
             var timer = Stopwatch.StartNew();
@@ -36,6 +36,8 @@ namespace BinaryTreeTask
             timer2.Stop();
             Console.WriteLine();
             Console.WriteLine($"Using recursion time = {TimeSpan.FromTicks(timer2.ElapsedTicks).TotalMilliseconds}ms");
+
+            tree.Where(i => i == 0).ToList().ForEach(digit => Console.Write($"{digit} "));
         }
     }
 }

@@ -59,11 +59,6 @@ namespace BinaryTreeTask
 
         private void InsertHelper(Node parent, Node newNode)
         {
-            if (parent is null)
-            {
-                parent = newNode;
-            }
-
             if (newNode.Value.CompareTo(parent.Value) < 0)
             {
                 if (parent.Left is null)
