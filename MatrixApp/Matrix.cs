@@ -10,11 +10,6 @@ namespace MatrixApp
         private int Rows => _elements.GetLength(0);
         private int Cols => _elements.GetLength(1);
 
-        public double this[int i, int j]
-        {
-            get => _elements[i, j];
-        }
-
         public Matrix(double[,] elements)
         {
             if (elements is null || elements.Length < 1)
@@ -93,7 +88,7 @@ namespace MatrixApp
 
             for (var i = 0; i < rhs.Rows; i++)
             {
-                cell += lhs[row, i] * rhs[i, col];
+                cell += lhs._elements[row, i] * rhs._elements[i, col];
             }
 
             return cell;
@@ -119,7 +114,7 @@ namespace MatrixApp
             {
                 for (var j = 0; j < lhs.Cols; j++)
                 {
-                    result[i, j] = lhs[i, j] + ((int)operation * rhs[i, j]);
+                    result[i, j] = lhs._elements[i, j] + ((int)operation * rhs._elements[i, j]);
                 }
             }
 
