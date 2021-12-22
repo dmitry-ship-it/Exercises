@@ -38,9 +38,7 @@ namespace MatrixApp.Tests
             var expected = new Matrix(result);
             var actual = new Matrix(lhs) + new Matrix(rhs);
 
-            var expectedSize = (result.GetLength(0), result.GetLength(1));
-
-            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, expectedSize, delta: 1E-9));
+            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, delta: 1E-9));
         }
 
         [TestCaseSource(typeof(TestCasesData), nameof(TestCasesData.ValidArrayPairsWithSameSizeWithSubtractResult))]
@@ -49,9 +47,7 @@ namespace MatrixApp.Tests
             var expected = new Matrix(result);
             var actual = new Matrix(lhs) - new Matrix(rhs);
 
-            var expectedSize = (result.GetLength(0), result.GetLength(1));
-
-            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, expectedSize, delta: 1E-9));
+            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, delta: 1E-9));
         }
 
         [TestCaseSource(typeof(TestCasesData), nameof(TestCasesData.ValidArrayPairsWithSameSizeWithMultiplyResult))]
@@ -60,12 +56,10 @@ namespace MatrixApp.Tests
             var expected = new Matrix(result);
             var actual = new Matrix(lhs) * new Matrix(rhs);
 
-            var expectedSize = (result.GetLength(0), result.GetLength(1));
-
-            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, expectedSize, delta: 1E-9));
+            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, delta: 1E-9));
         }
 
-        private static bool MatricesElementwiseEqual(Matrix lhs, Matrix rhs, (int Rows, int Cols) expectedSize, double delta)
+        private static bool MatricesElementwiseEqual(Matrix lhs, Matrix rhs, double delta)
         {
             if (lhs is null || rhs is null)
             {
@@ -76,9 +70,15 @@ namespace MatrixApp.Tests
             var lhsArray = field.GetValue(lhs) as double[,];
             var rhsArray = field.GetValue(rhs) as double[,];
 
-            for (var i = 0; i < expectedSize.Rows; i++)
+            if (lhsArray.GetLength(0) != rhsArray.GetLength(0)
+                || lhsArray.GetLength(1) != rhsArray.GetLength(1))
             {
-                for (var j = 0; j < expectedSize.Cols; j++)
+                return false;
+            }
+
+            for (var i = 0; i < lhsArray.GetLength(0); i++)
+            {
+                for (var j = 0; j < lhsArray.GetLength(1); j++)
                 {
                     if (Math.Abs(lhsArray[i, j] - rhsArray[i, j]) > delta)
                     {
