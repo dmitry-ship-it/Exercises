@@ -33,26 +33,47 @@ namespace MatrixApp.Tests
 
         [TestCaseSource(typeof(TestCasesData), nameof(TestCasesData.ValidArrayPairsWithSameSizeWithAddResult))]
         public void Add_ValidArrays(double[,] lhs, double[,] rhs, double[,] result)
-            => Assert.IsTrue(MatricesElementwiseEqual(new Matrix(lhs) + new Matrix(rhs), new Matrix(result), delta: 1E-9));
+        {
+            var expected = new Matrix(result);
+            var actual = new Matrix(lhs) + new Matrix(rhs);
+
+            var expectedSize = (result.GetLength(0), result.GetLength(1));
+
+            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, expectedSize, delta: 1E-9));
+        }
 
         [TestCaseSource(typeof(TestCasesData), nameof(TestCasesData.ValidArrayPairsWithSameSizeWithSubtractResult))]
         public void Subtract_ValidArrays(double[,] lhs, double[,] rhs, double[,] result)
-            => Assert.IsTrue(MatricesElementwiseEqual(new Matrix(lhs) - new Matrix(rhs), new Matrix(result), delta: 1E-9));
+        {
+            var expected = new Matrix(result);
+            var actual = new Matrix(lhs) - new Matrix(rhs);
+
+            var expectedSize = (result.GetLength(0), result.GetLength(1));
+
+            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, expectedSize, delta: 1E-9));
+        }
 
         [TestCaseSource(typeof(TestCasesData), nameof(TestCasesData.ValidArrayPairsWithSameSizeWithMultiplyResult))]
         public void Multiply_ValidArrays(double[,] lhs, double[,] rhs, double[,] result)
-            => Assert.IsTrue(MatricesElementwiseEqual(new Matrix(lhs) * new Matrix(rhs), new Matrix(result), delta: 1E-9));
-
-        private static bool MatricesElementwiseEqual(Matrix lhs, Matrix rhs, double delta)
         {
-            if (lhs is null || rhs is null || !Matrix.IsEqualSizes(lhs, rhs))
+            var expected = new Matrix(result);
+            var actual = new Matrix(lhs) * new Matrix(rhs);
+
+            var expectedSize = (result.GetLength(0), result.GetLength(1));
+
+            Assert.IsTrue(MatricesElementwiseEqual(expected, actual, expectedSize, delta: 1E-9));
+        }
+
+        private static bool MatricesElementwiseEqual(Matrix lhs, Matrix rhs, (int Rows, int Cols) expectedSize, double delta)
+        {
+            if (lhs is null || rhs is null)
             {
                 return false;
             }
 
-            for (var i = 0; i < lhs.Rows; i++)
+            for (var i = 0; i < expectedSize.Rows; i++)
             {
-                for (var j = 0; j < lhs.Cols; j++)
+                for (var j = 0; j < expectedSize.Cols; j++)
                 {
                     if (Math.Abs(lhs[i, j] - rhs[i, j]) > delta)
                     {

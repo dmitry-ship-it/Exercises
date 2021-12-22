@@ -7,8 +7,13 @@ namespace MatrixApp
     {
         private readonly double[,] _elements;
 
-        public int Rows => _elements.GetLength(0);
-        public int Cols => _elements.GetLength(1);
+        private int Rows => _elements.GetLength(0);
+        private int Cols => _elements.GetLength(1);
+
+        public double this[int i, int j]
+        {
+            get => _elements[i, j];
+        }
 
         public Matrix(double[,] elements)
         {
@@ -18,12 +23,6 @@ namespace MatrixApp
             }
 
             _elements = elements.Clone() as double[,];
-        }
-
-        public double this[int i, int j]
-        {
-            get => _elements[i, j];
-            set => _elements[i, j] = value;
         }
 
         public static Matrix Add(Matrix lhs, Matrix rhs)
@@ -36,7 +35,17 @@ namespace MatrixApp
             return MatricesOperation(lhs, rhs, Operation.Subtract);
         }
 
-        public static Matrix Multiply(Matrix lhs, Matrix rhs)
+        public static Matrix operator +(Matrix lhs, Matrix rhs)
+        {
+            return Add(lhs, rhs);
+        }
+
+        public static Matrix operator -(Matrix lhs, Matrix rhs)
+        {
+            return Subtract(lhs, rhs);
+        }
+
+        public static Matrix operator *(Matrix lhs, Matrix rhs)
         {
             if (lhs.Cols != rhs.Rows)
             {
@@ -57,21 +66,6 @@ namespace MatrixApp
             return new Matrix(result);
         }
 
-        public static Matrix operator +(Matrix lhs, Matrix rhs)
-        {
-            return Add(lhs, rhs);
-        }
-
-        public static Matrix operator -(Matrix lhs, Matrix rhs)
-        {
-            return Subtract(lhs, rhs);
-        }
-
-        public static Matrix operator *(Matrix lhs, Matrix rhs)
-        {
-            return Multiply(lhs, rhs);
-        }
-
         public override string ToString()
         {
             var result = new StringBuilder();
@@ -83,12 +77,6 @@ namespace MatrixApp
             }
 
             return result.ToString();
-        }
-
-        public static bool IsEqualSizes(Matrix lhs, Matrix rhs)
-        {
-            return lhs.Rows == rhs.Rows
-                && lhs.Cols == rhs.Cols;
         }
 
         private void AppendRow(StringBuilder result, int row)
@@ -119,7 +107,8 @@ namespace MatrixApp
 
         private static Matrix MatricesOperation(Matrix lhs, Matrix rhs, Operation operation)
         {
-            if (!IsEqualSizes(lhs, rhs))
+            if (lhs.Rows != rhs.Rows
+                || lhs.Cols != rhs.Cols)
             {
                 throw new ArgumentException("Matrix dimensions do not match.");
             }
