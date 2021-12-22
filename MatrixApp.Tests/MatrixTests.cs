@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Reflection;
 
 namespace MatrixApp.Tests
 {
@@ -71,11 +72,15 @@ namespace MatrixApp.Tests
                 return false;
             }
 
+            var field = lhs.GetType().GetField("_elements", BindingFlags.NonPublic | BindingFlags.Instance);
+            var lhsArray = field.GetValue(lhs) as double[,];
+            var rhsArray = field.GetValue(rhs) as double[,];
+
             for (var i = 0; i < expectedSize.Rows; i++)
             {
                 for (var j = 0; j < expectedSize.Cols; j++)
                 {
-                    if (Math.Abs(lhs[i, j] - rhs[i, j]) > delta)
+                    if (Math.Abs(lhsArray[i, j] - rhsArray[i, j]) > delta)
                     {
                         return false;
                     }
