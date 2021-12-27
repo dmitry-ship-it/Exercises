@@ -6,7 +6,7 @@ namespace BinaryTreeTask
 {
     public class BinaryTree<T> : IEnumerable<T> where T : IComparable<T>
     {
-        private sealed class Node : IEnumerable<T>
+        private sealed class Node
         {
             public Node Left { get; set; }
             public Node Right { get; set; }
@@ -36,11 +36,6 @@ namespace BinaryTreeTask
                         yield return value;
                     }
                 }
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
             }
         }
 
@@ -92,22 +87,5 @@ namespace BinaryTreeTask
         {
             return GetEnumerator();
         }
-
-        #region recursion
-        private void DisplayTree(Node root, Action<T> action)
-        {
-            if (root is not null)
-            {
-                DisplayTree(root.Left, action);
-                action(root.Value);
-                DisplayTree(root.Right, action);
-            }
-        }
-
-        public void DisplayTree(Action<T> action)
-        {
-            DisplayTree(_root, action);
-        }
-        #endregion
     }
 }
