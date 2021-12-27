@@ -21,6 +21,11 @@ namespace BinaryTreeTask
                 throw new ArgumentNullException(nameof(testName));
             }
 
+            if (date > DateTime.Now)
+            {
+                throw new ArgumentOutOfRangeException(nameof(date), "Invalid date.");
+            }
+
             if (mark < 0 || mark > 10)
             {
                 throw new ArgumentOutOfRangeException(nameof(mark), "Mark cannot be negative or more than 10.");

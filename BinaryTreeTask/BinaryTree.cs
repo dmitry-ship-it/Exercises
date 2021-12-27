@@ -93,22 +93,20 @@ namespace BinaryTreeTask
             return GetEnumerator();
         }
 
-        // use only for debug
-        // TODO: Delete after task completion
-        #region RemoveThis
-        private void DisplayTree(Node root)
+        #region recursion
+        private void DisplayTree(Node root, Action<T> action)
         {
             if (root is not null)
             {
-                DisplayTree(root.Left);
-                Console.Write($"{root.Value} ");
-                DisplayTree(root.Right);
+                DisplayTree(root.Left, action);
+                action(root.Value);
+                DisplayTree(root.Right, action);
             }
         }
 
-        public void DisplayTree()
+        public void DisplayTree(Action<T> action)
         {
-            DisplayTree(_root);
+            DisplayTree(_root, action);
         }
         #endregion
     }
