@@ -40,11 +40,13 @@ namespace BinaryTreeTask
             var sortOrder = GetSortOrder();
 
             Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("Choose sort order:");
             Console.WriteLine("1. Ascending");
             Console.WriteLine("2. Descending");
+            Console.Write(">> ");
 
-            var results = Console.ReadKey(intercept: true).Key switch
+            var results = Console.ReadKey(intercept: false).Key switch
             {
                 ConsoleKey.D1 => _results.OrderBy(sortOrder),
                 ConsoleKey.D2 => _results.OrderByDescending(sortOrder),
@@ -52,8 +54,15 @@ namespace BinaryTreeTask
             };
 
             Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine($"How many lines to select? ({results.Count()} available)");
+            Console.Write(">> ");
             var lineCount = int.Parse(Console.ReadLine());
+
+            if (lineCount < 1)
+            {
+                throw new ArgumentException("Line count cannot be less than 1.");
+            }
 
             return results.Take(lineCount);
         }
@@ -66,8 +75,9 @@ namespace BinaryTreeTask
             Console.WriteLine("2. Test name");
             Console.WriteLine("3. Date");
             Console.WriteLine("4. Mark");
+            Console.Write(">> ");
 
-            return Console.ReadKey(intercept: true).Key switch
+            return Console.ReadKey(intercept: false).Key switch
             {
                 ConsoleKey.D1 => result => result.StudentName,
                 ConsoleKey.D2 => result => result.TestName,

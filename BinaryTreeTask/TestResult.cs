@@ -1,5 +1,7 @@
 ﻿using System;
 
+#pragma warning disable S1210
+
 namespace BinaryTreeTask
 {
     public class TestResult : IComparable<TestResult>
